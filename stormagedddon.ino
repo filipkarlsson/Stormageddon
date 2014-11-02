@@ -1,11 +1,20 @@
 /*
 Stormageddon - Dark Lord of All
 
-Sorce code for sumo robot using the Arduino Pro Mini ATmega328. 
+Sorce code for mini sumo robot using the Arduino Pro Mini ATmega328. 
 
-Copyright Filip Karlsson, Axel Tdierhorn 2014.
+Copyright (C) Filip Karlsson, Axel Tdierhorn 2014.
 
-The code is avalible under the GNU Public License version 3. 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <SoftwareSerial.h>
@@ -34,10 +43,10 @@ int M1Speed; //holds speed for motors
 int M2Speed;
 
 //constants for predfiend motorspeeds (-127 to 127) 
-int backward = 30;
-int fast_backward = 60;
-int forward = -30;
-int fast_forward = -60; 
+int backward = 60;
+int fast_backward = 127;
+int forward = -60;
+int fast_forward = -127; 
 
 int back_delay = 350; //Period of time the robot will reverse after crossing edge of dhoyo
 
@@ -85,11 +94,12 @@ void loop()
   }
 
 
+
    while(digitalRead(start_module_pin)){ // main loop, go as long as start signal is active. 
    
    if(!digitalRead(front_mid)){ //senor pins go low in case of detection
-    M1Speed = forward;
-    M2Speed = forward;
+    M1Speed = fast_forward;
+    M2Speed = fast_forward;
 
    }
 
@@ -105,8 +115,8 @@ void loop()
 
 
    else if(!digitalRead(back_mid)){
-    M1Speed = backward;
-    M2Speed = backward;
+    M1Speed = fast_backward;
+    M2Speed = fast_backward;
    }
 
    else if(!digitalRead(back_right)){
@@ -192,5 +202,9 @@ void back_check(){
 
   }
 
+
+
+   qik.setM0Speed(0);
+   qik.setM1Speed(0);
 return;
 }
